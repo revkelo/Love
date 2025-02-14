@@ -38,22 +38,40 @@ onload = () => {
       openBtn.style.display = "inline-block";
   });
 
-// Si el mouse pasa sobre el botón "No", este se mueve
- noBtn.addEventListener("click", () => {
+  const noBtn = document.getElementById("noBtn");
+  let clickCount = 0;
+  
+  noBtn.addEventListener("click", () => {
+      clickCount++;
+  
+      // Si es el segundo clic, el botón desaparece
+      if (clickCount === 2) {
+          noBtn.style.display = "none";
 
-    noBtn.style.position = "absolute"; // Se vuelve absoluto cuando se mueve
-            // Dimensiones de la ventana
-            const maxX = window.innerWidth - noBtn.offsetWidth - 20; // Restamos 20px para que no toque el borde
-            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-            
-            // Posiciones aleatorias dentro del área permitida
-            const x = Math.max(10, Math.random() * maxX); // No menor a 10px para que no desaparezca
-            const y = Math.max(10, Math.random() * maxY);
-
-            // Aplicamos la nueva posición
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
-        });
+          return;
+      }
+  
+  
+          noBtn.style.position = "absolute";
+  
+          const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+          const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+  
+          const x = Math.random() * maxX;
+          const y = Math.random() * maxY;
+  
+          noBtn.style.left = `${x}px`;
+          noBtn.style.top = `${y}px`;
+      
+  });
+  
+  // Reiniciar el contador después de un tiempo para evitar doble clic accidental
+  noBtn.addEventListener("mouseleave", () => {
+      setTimeout(() => {
+          clickCount = 0;
+      }, 500);
+  });
+  
 
 // Si presiona "Sí", aparece un hermoso mensaje
 yesBtn.addEventListener("click", () => {
