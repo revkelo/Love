@@ -45,7 +45,7 @@ onload = () => {
       clickCount++;
   
       // Si es el segundo clic, el botón desaparece
-      if (clickCount === 2) {
+      if (clickCount === 5) {
           noBtn.style.display = "none";
 
           return;
