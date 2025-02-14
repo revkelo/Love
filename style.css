@@ -53,11 +53,13 @@ body {
 }
 
 
+
+
   
   .wrapper {
     height: 200px;
     width: 300px;
-    background-color: #0e0101;
+    background-color: #0e010100;
     position: relative;
     display: flex;
     justify-content: center;
@@ -143,6 +145,24 @@ button:hover {
     background-color: #B52E4C;
 }
 
+@media (max-width: 1080px) {
+  button {
+    padding: 20px 30px;
+    font-size: 3.5vw;
+  }
+
+  #noBtn, #yesBtn {
+      padding: 20px 30px;
+      font-size: 3.5vw;
+  }
+}
+
+@media (max-width: 1080px) {
+  p {
+      font-size: 3.5vw; /* Texto escalable basado en el ancho de la pantalla */
+  }
+}
+
 
 .open .lid.one {
     transform: rotateX(90deg);
@@ -159,6 +179,43 @@ button:hover {
     transition-delay: 0.5s;
 }
 
+@media (max-width: 1080px) {
+  .wrapper {
+      width: 50vw;
+      height: 67%; /* Reducimos la altura para que no sea tan alta */
+  }
+
+
+  .envelope {
+    height: 57%;
+  }
+  .lid {
+      border-right: 25vw solid transparent;
+      border-bottom: 10vh solid transparent;
+      border-left: 25vw solid transparent;
+  }
+
+  .lid.one {
+      border-top: 10vh solid #e64545;
+  }
+
+  .lid.two {
+      border-top: 10vh solid #b91634;
+  }
+
+  .envelope {
+      border-top: 10vh solid transparent;
+      border-right: 25vw solid #e73030;
+      border-bottom: 10vh solid #e73030;
+      border-left: 25vw solid #e73030;
+  }
+
+
+  .letter p {
+      font-size: 2.2vw;
+      margin-top: 2vh;
+  }
+}
   
 .night {
   position: fixed;
