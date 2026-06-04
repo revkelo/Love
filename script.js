@@ -1,88 +1,118 @@
-onload = () => {
-    document.body.classList.remove("container");
-  };
+// ── Stars canvas ────────────────────────────────────────────
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
 
-  const wrapper = document.querySelector(".wrapper");
-  const letter = document.querySelector(".letter");
-  const openBtn = document.getElementById("openBtn");
-  const closeBtn = document.getElementById("closeBtn");
-  
-  openBtn.addEventListener("click", () => {
-    wrapper.classList.add("open");
-    letter.classList.add("show"); 
-    openBtn.style.display = "none";
-    closeBtn.style.display = "inline-block";
+function resizeCanvas() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-    // Mostrar mensaje hermoso con animación suave
-    openMessage.style.display = "block";
-    setTimeout(() => {
-        openMessage.style.opacity = "1"; // Hace visible el mensaje
-        openMessage.style.transform = "translateY(0)"; // Suaviza el movimiento
-    }, 100);
+const stars = Array.from({ length: 120 }, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  r: Math.random() * 1.4 + 0.3,
+  a: Math.random(),
+  speed: Math.random() * 0.008 + 0.003,
+}));
 
-    // Ocultar mensaje después de 7 segundos con desvanecimiento
-    setTimeout(() => {
-        openMessage.style.opacity = "0"; 
-        openMessage.style.transform = "translateY(-20px)"; // Se desliza suavemente hacia arriba
-        setTimeout(() => {
-            openMessage.style.display = "none";
-        }, 1500); // Esperamos que termine la animación antes de ocultarlo
-    }, 7000);
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => {
+    s.a += s.speed;
+    const alpha = (Math.sin(s.a) + 1) / 2;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 220, 230, ${alpha * 0.9})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// ── Envelope ─────────────────────────────────────────────────
+onload = () => document.body.classList.remove('container');
+
+const wrapper     = document.querySelector('.wrapper');
+const letter      = document.querySelector('.letter');
+const openBtn     = document.getElementById('openBtn');
+const closeBtn    = document.getElementById('closeBtn');
+const openMessage = document.getElementById('openMessage');
+const loveMessage = document.getElementById('loveMessage');
+
+openBtn.addEventListener('click', () => {
+  wrapper.classList.add('open');
+  letter.classList.add('show');
+  openBtn.style.display   = 'none';
+  closeBtn.style.display  = 'inline-block';
+
+  openMessage.style.display = 'block';
+  setTimeout(() => {
+    openMessage.style.opacity   = '1';
+    openMessage.style.transform = 'translateY(0)';
+  }, 120);
+
+  setTimeout(() => {
+    openMessage.style.opacity   = '0';
+    openMessage.style.transform = 'translateY(-20px)';
+    setTimeout(() => { openMessage.style.display = 'none'; }, 1500);
+  }, 7000);
 });
 
-  
-  closeBtn.addEventListener("click", () => {
-      wrapper.classList.remove("open");
-      letter.classList.toggle("show"); // Agrega o quita la clase 'show'
-      closeBtn.style.display = "none";
-      openBtn.style.display = "inline-block";
-  });
+closeBtn.addEventListener('click', () => {
+  wrapper.classList.remove('open');
+  letter.classList.remove('show');
+  closeBtn.style.display = 'none';
+  openBtn.style.display  = 'inline-block';
+});
 
-  const noBtn = document.getElementById("noBtn");
-  let clickCount = 0;
-  
-  noBtn.addEventListener("click", () => {
-      clickCount++;
-  
-      // Si es el segundo clic, el botón desaparece
-      if (clickCount === 5) {
-          noBtn.style.display = "none";
-
-          return;
-      }
-  
-  
-          noBtn.style.position = "absolute";
-  
-          const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-          const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-  
-          const x = Math.random() * maxX;
-          const y = Math.random() * maxY;
-  
-          noBtn.style.left = `${x}px`;
-          noBtn.style.top = `${y}px`;
-      
-  });
-  
-  // Reiniciar el contador después de un tiempo para evitar doble clic accidental
-  noBtn.addEventListener("mouseleave", () => {
-      setTimeout(() => {
-          clickCount = 0;
-      }, 500);
-  });
-  
-
-// Si presiona "Sí", aparece un hermoso mensaje
-yesBtn.addEventListener("click", () => {
-    loveMessage.style.display = "block";
-
-    // Desaparece después de 3 segundos
+// ── Floating hearts ──────────────────────────────────────────
+function spawnHearts() {
+  const emojis = ['💖', '💕', '🌹', '✨', '💗', '💓'];
+  for (let i = 0; i < 18; i++) {
     setTimeout(() => {
-        loveMessage.style.animation = "fadeOut 1s ease-in-out";
-        setTimeout(() => {
-            loveMessage.style.display = "none";
-            loveMessage.style.animation = "fadeIn 1s ease-in-out"; // Reiniciar animación para la próxima vez
-        }, 1000);
-    }, 3000);
+      const el = document.createElement('span');
+      el.className   = 'floating-heart';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left  = Math.random() * 90 + 5 + 'vw';
+      el.style.top   = Math.random() * 60 + 20 + 'vh';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2100);
+    }, i * 90);
+  }
+}
+
+// ── Sí button ────────────────────────────────────────────────
+document.getElementById('yesBtn').addEventListener('click', () => {
+  spawnHearts();
+  loveMessage.style.display   = 'block';
+  loveMessage.style.animation = 'popIn 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+
+  setTimeout(() => {
+    loveMessage.style.animation = 'fadeOut 1s ease-in-out forwards';
+    setTimeout(() => {
+      loveMessage.style.display   = 'none';
+      loveMessage.style.animation = '';
+    }, 1000);
+  }, 3200);
+});
+
+// ── No button (escapa) ───────────────────────────────────────
+const noBtn = document.getElementById('noBtn');
+let clicks = 0;
+
+noBtn.addEventListener('click', () => {
+  clicks++;
+  if (clicks >= 5) { noBtn.style.display = 'none'; return; }
+
+  noBtn.style.position = 'fixed';
+  const maxX = window.innerWidth  - noBtn.offsetWidth  - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+  noBtn.style.left = Math.random() * maxX + 'px';
+  noBtn.style.top  = Math.random() * maxY + 'px';
+});
+
+noBtn.addEventListener('mouseleave', () => {
+  setTimeout(() => { clicks = 0; }, 500);
 });

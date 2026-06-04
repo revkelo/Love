@@ -1,44 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalina ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="foto.css">
-  <title>Catalina ❤️</title>
 </head>
 
 <body class="container">
-  <div class="night"></div>
+  <canvas id="stars"></canvas>
 
   <div class="text">
+
+    <h1 class="title">Para Catalina 🌹</h1>
+
     <div class="wrapper">
       <div class="lid one"></div>
       <div class="lid two"></div>
       <div class="envelope"></div>
       <div class="letter">
-        <img src="img.jpg" alt="Fotito" class="photo">
+        <div class="polaroid">
+          <img src="img.jpg" alt="Fotito" class="photo">
+          <span class="polaroid-caption">Catalina 💕</span>
+        </div>
       </div>
-
-
     </div>
 
     <div class="buttons">
-      <button id="openBtn">Abrir</button>
-      <button id="closeBtn" style="display: none;">Cerrar</button>
-      <p>¿Me amas? 💖</p>
-      <button id="yesBtn">Sí 😍</button>
-      <button id="noBtn">No 😢</button>
+      <button id="openBtn">Abrir carta 💌</button>
+      <button id="closeBtn" style="display: none;">Cerrar 🌸</button>
+
+      <div class="question-block" id="questionBlock">
+        <p class="question">¿Me amas? 💖</p>
+        <div class="answer-buttons">
+          <button id="yesBtn">Sí, mucho 😍</button>
+          <button id="noBtn">No 😢</button>
+        </div>
+      </div>
     </div>
 
-    <div class="love-message" id="loveMessage">¡TE AMO CATALINA! 💖😍</div>
-    <!-- Mensaje hermoso al abrir -->
+    <div class="love-message" id="loveMessage">
+      ¡TE AMO CATALINA! 💖✨
+    </div>
+
     <div class="open-message" id="openMessage">
-      Desde el primer día en que te vi, supe que eras especial.
-      Eres la razón por la que mi corazón late más rápido. 💖
-      ¡Gracias por estar en mi vida! 🌹🥰
+      Desde el primer día en que te vi, supe que eras especial.<br><br>
+      Eres la razón por la que mi corazón late más rápido.<br>
+      Gracias por estar en mi vida. 🌹🥰
     </div>
   </div>
 
