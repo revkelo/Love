@@ -50,12 +50,12 @@ openBtn.addEventListener('click', () => {
   openMessage.style.display = 'block';
   setTimeout(() => {
     openMessage.style.opacity   = '1';
-    openMessage.style.transform = 'translateY(0)';
+    openMessage.style.transform = 'translateX(-50%) translateY(0)';
   }, 120);
 
   setTimeout(() => {
     openMessage.style.opacity   = '0';
-    openMessage.style.transform = 'translateY(-20px)';
+    openMessage.style.transform = 'translateX(-50%) translateY(-20px)';
     setTimeout(() => { openMessage.style.display = 'none'; }, 1500);
   }, 7000);
 });
