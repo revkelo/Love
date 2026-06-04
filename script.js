@@ -87,6 +87,10 @@ function spawnHearts() {
 document.getElementById('yesBtn').addEventListener('click', () => {
   spawnHearts();
   loveMessage.style.display   = 'block';
+  // Reiniciar la animación: limpiar y forzar un reflow para que popIn
+  // vuelva a ejecutarse en clics sucesivos.
+  loveMessage.style.animation = 'none';
+  void loveMessage.offsetWidth; // reflow forzado
   loveMessage.style.animation = 'popIn 0.5s cubic-bezier(0.34,1.56,0.64,1)';
 
   setTimeout(() => {
@@ -102,17 +106,29 @@ document.getElementById('yesBtn').addEventListener('click', () => {
 const noBtn = document.getElementById('noBtn');
 let clicks = 0;
 
-noBtn.addEventListener('click', () => {
+function escapeNoBtn() {
   clicks++;
   if (clicks >= 5) { noBtn.style.display = 'none'; return; }
 
   noBtn.style.position = 'fixed';
-  const maxX = window.innerWidth  - noBtn.offsetWidth  - 20;
-  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-  noBtn.style.left = Math.random() * maxX + 'px';
-  noBtn.style.top  = Math.random() * maxY + 'px';
+
+  // Mantener el botón dentro del viewport. En pantallas pequeñas el margen
+  // puede dejar maxX/maxY negativos, así que lo acotamos con Math.max(0, ...).
+  const margin = 10;
+  const maxX = Math.max(0, window.innerWidth  - noBtn.offsetWidth  - margin);
+  const maxY = Math.max(0, window.innerHeight - noBtn.offsetHeight - margin);
+  noBtn.style.left = (margin + Math.random() * maxX) + 'px';
+  noBtn.style.top  = (margin + Math.random() * maxY) + 'px';
+}
+
+noBtn.addEventListener('click', escapeNoBtn);
+
+// En desktop el contador se reinicia al salir el ratón del botón.
+noBtn.addEventListener('mouseleave', () => {
+  setTimeout(() => { clicks = 0; }, 500);
 });
 
-noBtn.addEventListener('mouseleave', () => {
+// Fallback para móvil (no hay mouseleave): reiniciar el contador tras tocar.
+noBtn.addEventListener('touchend', () => {
   setTimeout(() => { clicks = 0; }, 500);
 });

@@ -142,14 +142,9 @@ body {
 }
 
 .letter {
-    position: absolute;
-    top: 0;
-    width: 80%;
-    height: 80%;
-    background-color: #FFF5F7;
-    border-radius: 15px;
+    /* Posicionamiento y dimensiones se definen en foto.css (polaroid).
+       Aquí solo conservamos el stacking y la animación de apertura. */
     z-index: 2;
-    transition: 0.5s;
     transform: translateY(0);
 }
 
